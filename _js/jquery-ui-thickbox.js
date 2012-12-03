@@ -12,11 +12,13 @@ $.widget('ui.thickbox', $.extend({}, $.ui.dialog.prototype, {
         // TODO: по указанным кейсам реслизовать вставку кастомного контента через штуку, указанную ниже
         if (this.url != '') {
             if (this.ajaxLoad == true) {
+                var current_element = this.element;
                 $.ajax({
                     url:this.url,
                     success:function (data) {
-                        $(".dialog-content").html(data);
-
+                        if(data!=""){
+                            $(data).appendTo(current_element);
+                        }
                     },
                     error: function(){
                         alert('Ajax error');
