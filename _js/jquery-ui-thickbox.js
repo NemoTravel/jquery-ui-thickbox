@@ -1,6 +1,6 @@
 // Thickbox realization will be added here
 $.widget('ui.thickbox', $.extend({}, $.ui.dialog.prototype, {
-    url:'ajax.html',
+    url:'',
     ajaxLoad:true,
     widgetEventPrefix:'thickbox',
     _init:function () {
@@ -10,25 +10,26 @@ $.widget('ui.thickbox', $.extend({}, $.ui.dialog.prototype, {
     _create:function () {
         $.ui.dialog.prototype._create.apply(this, arguments);
         // TODO: по указанным кейсам реслизовать вставку кастомного контента через штуку, указанную ниже
-        if (this.url != '') {
-            if (this.ajaxLoad == true) {
+        if (this.options.url != '') {
+            if (this.options.ajaxLoad == true) {
                 var current_element = this.element;
                 $.ajax({
-                    url:this.url,
+                    url:this.options.url,
                     success:function (data) {
                         if(data!=""){
                             $(data).appendTo(current_element);
                         }
                     },
-                    error: function(){
-                        alert('Ajax error');
+                    error: function(e){
+                        console.log('Error: can\'t load data via AJAX:', e);
                     }
                 })
             }
             else {
-                $('<iframe src="' + this.url + '"></iframe>').appendTo(this.element);
+                $('<iframe class="thickbox_iframe" src="' + this.options.url + '"></iframe>').appendTo(this.element);
             }
         }
     }
+
 }));
 $.ui.thickbox.defaults = $.extend({}, $.ui.dialog.defaults);
