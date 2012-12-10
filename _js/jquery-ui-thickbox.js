@@ -1,8 +1,13 @@
 // Thickbox realization will be added here
 $.widget('ui.thickbox', $.extend({}, $.ui.dialog.prototype, {
-    url:'',
+    url:'http://google.com/',
     ajaxLoad:true,
     widgetEventPrefix:'thickbox',
+    modal: true,
+  /*  overlay : {
+        background: 'red',
+        opacity: '0.1'
+    },*/
     _init:function () {
         this.element.data('dialog', this.element.data('thickbox'));
         return $.ui.dialog.prototype._init.apply(this, arguments);
@@ -29,6 +34,7 @@ $.widget('ui.thickbox', $.extend({}, $.ui.dialog.prototype, {
                 $('<iframe class="thickbox_iframe" src="' + this.options.url + '"></iframe>').appendTo(this.element);
             }
         }
+
     }
 
 }));
