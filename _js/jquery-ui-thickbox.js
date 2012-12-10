@@ -1,13 +1,8 @@
 // Thickbox realization will be added here
 $.widget('ui.thickbox', $.extend({}, $.ui.dialog.prototype, {
-    url:'http://google.com/',
+    url:'',
     ajaxLoad:true,
     widgetEventPrefix:'thickbox',
-    modal: true,
-  /*  overlay : {
-        background: 'red',
-        opacity: '0.1'
-    },*/
     _init:function () {
         this.element.data('dialog', this.element.data('thickbox'));
         return $.ui.dialog.prototype._init.apply(this, arguments);
