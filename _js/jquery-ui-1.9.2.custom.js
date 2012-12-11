@@ -4838,6 +4838,7 @@ $.extend( $.ui.dialog.overlay, {
 
 		var $el = ( this.oldInstances.pop() || $( "<div>" ).addClass( "ui-widget-overlay" ) );
 
+
 		// allow closing by pressing the escape key
 		$( document ).bind( "keydown.dialog-overlay", function( event ) {
 			var instances = $.ui.dialog.overlay.instances;
@@ -4848,12 +4849,14 @@ $.extend( $.ui.dialog.overlay, {
 
 				dialog.close( event );
 				event.preventDefault();
+
 			}
 		});
 
 		$el.appendTo( document.body ).css({
 			width: this.width(),
 			height: this.height()
+
 		});
 
 		if ( $.fn.bgiframe ) {

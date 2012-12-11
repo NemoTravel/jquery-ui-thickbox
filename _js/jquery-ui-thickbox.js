@@ -3,6 +3,7 @@ $.widget('ui.thickbox', $.extend({}, $.ui.dialog.prototype, {
     url:'',
     ajaxLoad:true,
     widgetEventPrefix:'thickbox',
+
     _init:function () {
         this.element.data('dialog', this.element.data('thickbox'));
         return $.ui.dialog.prototype._init.apply(this, arguments);
@@ -33,3 +34,4 @@ $.widget('ui.thickbox', $.extend({}, $.ui.dialog.prototype, {
 
 }));
 $.ui.thickbox.defaults = $.extend({}, $.ui.dialog.defaults);
+
