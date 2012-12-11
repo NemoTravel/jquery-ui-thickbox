@@ -1,7 +1,17 @@
 // Thickbox realization will be added here
 $.widget('ui.thickbox', $.extend({}, $.ui.dialog.prototype, {
-    url:'',
+    url:undefined,
     ajaxLoad:true,
+    data:[],
+    onLoad:function (data, status) {
+        if (data != "") {
+            $(data).appendTo(current_element);
+        }
+    },
+    onLoadError:function (e) {
+        console.log('Error: can\'t load data via AJAX:', e);
+    },
+    ajaxMethod:'POST',
     widgetEventPrefix:'thickbox',
 
     _init:function () {
@@ -11,25 +21,23 @@ $.widget('ui.thickbox', $.extend({}, $.ui.dialog.prototype, {
     _create:function () {
         $.ui.dialog.prototype._create.apply(this, arguments);
         // TODO: по указанным кейсам реслизовать вставку кастомного контента через штуку, указанную ниже
-        if (this.options.url != '') {
+        if (this.options.url !== undefined) {
             if (this.options.ajaxLoad == true) {
                 var current_element = this.element;
                 $.ajax({
                     url:this.options.url,
-                    success:function (data) {
-                        if(data!=""){
-                            $(data).appendTo(current_element);
-                        }
-                    },
-                    error: function(e){
-                        console.log('Error: can\'t load data via AJAX:', e);
-                    }
+                    type:(this.options.ajaxMethod.toUpperCase() === 'POST' || this.options.ajaxMethod.toUpperCase() === 'GET') ? this.options.ajaxMethod : 'POST',
+                    data: ($.isArray(this.options.data)) ? (this.options.data) : [],
+                    success:this.options.onLoad(data),
+                    error:this.options.onLoadError(e)
+
                 })
             }
             else {
                 $('<iframe class="thickbox_iframe" src="' + this.options.url + '"></iframe>').appendTo(this.element);
             }
         }
+
     }
 
 }));

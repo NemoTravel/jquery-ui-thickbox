@@ -10,7 +10,8 @@
     width: 100%;
     height: 100%;
 }
-.ui-widget-overlay{
-    background: red;
-    opacity: 0.4
+.ui-widget-overlay
+{
+    opacity: 0.50;
+    background-color: black;
 }
