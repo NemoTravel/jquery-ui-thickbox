@@ -1,6 +1,9 @@
-$(document).ready(function() {
+$(document).ready(function () {
     $('.dialog-content').thickbox({
-            url:"http://www.dejurka.ru/css/css_tutorials/",
-            ajaxLoad: false,
-            modal: true
-    })})
+        url:"http://www.dejurka.ru/css/css_tutorials/",
+        ajaxLoad:false,
+        modal:true,
+        data:[],
+        ajaxMethod:'POST'
+    });
+});

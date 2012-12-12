@@ -1,11 +1,11 @@
-// Thickbox realization will be added here
+// Thickbox realization
 $.widget('ui.thickbox', $.extend({}, $.ui.dialog.prototype, {
     url:undefined,
     ajaxLoad:true,
     data:[],
     onLoad:function (data, status) {
         if (data != "") {
-            $(data).appendTo(current_element);
+            $(data).appendTo(this.element)
         }
     },
     onLoadError:function (e) {
@@ -20,18 +20,15 @@ $.widget('ui.thickbox', $.extend({}, $.ui.dialog.prototype, {
     },
     _create:function () {
         $.ui.dialog.prototype._create.apply(this, arguments);
-        // TODO: по указанным кейсам реслизовать вставку кастомного контента через штуку, указанную ниже
         if (this.options.url !== undefined) {
             if (this.options.ajaxLoad == true) {
-                var current_element = this.element;
                 $.ajax({
                     url:this.options.url,
-                    type:(this.options.ajaxMethod.toUpperCase() === 'POST' || this.options.ajaxMethod.toUpperCase() === 'GET') ? this.options.ajaxMethod : 'POST',
-                    data: ($.isArray(this.options.data)) ? (this.options.data) : [],
-                    success:this.options.onLoad(data),
-                    error:this.options.onLoadError(e)
-
-                })
+                    type:(this.options.ajaxMethod.toUpperCase() === 'POST' || this.options.ajaxMethod.toUpperCase() === 'GET') ? this.options.ajaxMethod : 'POST', //если название метода недопустимое/неправильное то по умолчанию ставится метод POST
+                    data:($.isArray(this.options.data)) ? (this.options.data) : [],   //если данные которые нужно отправить на сервер не являются массивом, то отправляется пустой массив
+                    success:jQuery.proxy(this.onLoad, this),
+                    error:jQuery.proxy(this.onLoadError, this)
+                });
             }
             else {
                 $('<iframe class="thickbox_iframe" src="' + this.options.url + '"></iframe>').appendTo(this.element);
@@ -42,4 +39,3 @@ $.widget('ui.thickbox', $.extend({}, $.ui.dialog.prototype, {
 
 }));
 $.ui.thickbox.defaults = $.extend({}, $.ui.dialog.defaults);
-
